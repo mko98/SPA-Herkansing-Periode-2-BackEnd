@@ -35,27 +35,6 @@ routes.get('/games', function(req, res) {
         .catch((error) => res.status(400).json(error));
 });
 
-routes.get('/games/check/:id/:eid', function(req, res) {
-    res.contentType('application/json');
-    const id = req.param('id');
-    const eid = req.param('eid');
-
-    Game.findById(eid)
-        .then((games) => {
-            var isInArray = games.publishers.some(function (publisher) {
-                return publisher.equals(id);
-            }); return isInArray;
-
-    })
-        .then((isInArray) => {
-            res.status(200).json({'signedIn': isInArray})
-        })
-        .catch((error) => res.status(400).json(error));
-
-});
-
-
-
 routes.get('/games/:id', function(req, res) {
     res.contentType('application/json');
     const id = req.param('id');
@@ -106,8 +85,8 @@ routes.put('/games/:id', function(req, res) {
     const gameProps = req.body;
 
     Game.findByIdAndUpdate({_id: gameId}, gameProps)
-        .then(()=> games.findById({_id: gameId}))
-        .then(games => res.send(games))
+        // .then(()=> games.findById({_id: gameId}))
+        .then((games) => res.status(200).send(games))
         .catch((error) => res.status(400).json(error))
 
 });

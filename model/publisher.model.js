@@ -19,7 +19,7 @@ const PublisherSchema = new Schema({
     { usePushEach: true }
 );
 
-const Publisher = mongoose.model('publisher', PublisherSchema);
+const Publisher = mongoose.model('publishers', PublisherSchema);
 
 Publisher.count({}, function (err, count) {
     if(count < 1){

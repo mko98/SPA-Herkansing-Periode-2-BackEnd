@@ -110,7 +110,7 @@ routes.get('/publishers/:id', function(req, res) {
     res.contentType('application/json');
     const id = req.param('id');
     console.log(id);
-    publisher.findOne({_id: id})
+    Publisher.findOne({_id: id})
         .then((publisher) => {
         res.status(200).send(publisher);
 })
@@ -145,8 +145,7 @@ routes.put('/publishers/:id', function(req, res) {
     const publisherProps = req.body;
 
     Publisher.findByIdAndUpdate({_id: publisherId}, publisherProps)
-        .then(()=> publisher.findById({_id: publisherId}))
-    .then(publisher => res.send(publisher))
+    .then((publisher) => res.send(publisher))
     .catch((error) => res.status(400).json(error))
 
 });

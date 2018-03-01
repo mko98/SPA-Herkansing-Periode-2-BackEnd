@@ -35,7 +35,8 @@ Game.count({}, function (err, count) {
         const game = new Game({
             title: "Battlefield 1",
             genre: "First-person shooter",
-            engine: "Frostbite"
+            engine: "Frostbite",
+            publishers: "5a3fd41e3ef7ccda81e7dda4"
         });
         game.save();
     }

@@ -34,7 +34,7 @@ routes.get('/publishers/published/:id', function(req, res) {
     })
 });
 
-routes.get('/publishers/friendsoffriends/:id', function(req, res) {
+routes.get('/publishers/publishedby/:id', function(req, res) {
   res.contentType('application/json');
   var ids = [];
   const id = req.param('id');
@@ -59,7 +59,7 @@ routes.get('/publishers/friendsoffriends/:id', function(req, res) {
     })
 });
 
-routes.post('/publishers/befriend/:id/:gameid', function (req, res) {
+routes.post('/publishers/makeconnection/:id/:gameid', function (req, res) {
     res.contentType('application/json');
 
     const id = req.param('id');
@@ -77,7 +77,7 @@ routes.post('/publishers/befriend/:id/:gameid', function (req, res) {
 });
 
 
-routes.delete('/publishers/defriend/:id/:gameId', function(req, res) {
+routes.delete('/publishers/removeconnection/:id/:gameId', function(req, res) {
   res.contentType('application/json');
   var ids = [];
   const id = req.param('id');
@@ -90,7 +90,79 @@ routes.delete('/publishers/defriend/:id/:gameId', function(req, res) {
       result.records.forEach(function(record){
         ids.push(record._fields[0].properties.mongoPublisherId);
       });
-      res.status(200).json({"status": "friend deleted"});
+      res.status(200).json({"status": "relationship removed"});
+    })
+    .catch((error) => {
+      res.status(400).json(error);
+    });
+});
+
+routes.delete('/publishers/deletegame/:gameId', function(req, res) {
+  res.contentType('application/json');
+  var ids = [];
+  const gameId = req.param('gameId');
+
+
+  session
+    .run("MATCH (game:Game{mongoGameId: {idNeoGame}}) OPTIONAL MATCH (game)-[r]-() DELETE game, r", {idNeoGame: gameId})
+    .then(function(result) {
+      result.records.forEach(function(record){
+        ids.push(record._fields[0].properties.mongoPublisherId);
+      });
+      res.status(200).json({"status": "game deleted"});
+    })
+    .catch((error) => {
+      res.status(400).json(error);
+    });
+});
+
+routes.delete('/publishers/deletepublisher/:id', function(req, res) {
+  res.contentType('application/json');
+  var ids = [];
+  const id = req.param('id');
+
+
+  session
+    .run("MATCH (publisher:Publisher{mongoPublisherId: {idPublisher}}) OPTIONAL MATCH (publisher)-[r]-() DELETE publisher, r", {idPublisher: id})
+    .then(function(result) {
+      result.records.forEach(function(record){
+        ids.push(record._fields[0].properties.mongoPublisherId);
+      });
+      res.status(200).json({"status": "game deleted"});
+    })
+    .catch((error) => {
+      res.status(400).json(error);
+    });
+});
+
+routes.delete('/publishers/deletegameconnection/:gameId', function(req, res) {
+  res.contentType('application/json');
+  var ids = [];
+  const gameId = req.param('gameId');
+
+
+  session
+  // .run("MATCH (n:Publisher) MATCH (b:Game{mongoGameId: {idNeoGame}}) MATCH (n)-[r:PUBLISHED_BY]-(b) DELETE r", {idNeo: id, idNeoGame: gameId})
+    .run("MATCH (game:Game{mongoGameId: {idNeoGame}}) MATCH (game)-[r]-() DELETE r", {idNeoGame: gameId})
+    .then(function(result) {
+      res.status(200).json({"status": "game relationship deleted"});
+    })
+    .catch((error) => {
+      res.status(400).json(error);
+    });
+});
+
+routes.delete('/publishers/deletepublisherconnection/:id', function(req, res) {
+  res.contentType('application/json');
+  var ids = [];
+  const id = req.param('id');
+
+
+  session
+  // .run("MATCH (n:Publisher) MATCH (b:Game{mongoGameId: {idNeoGame}}) MATCH (n)-[r:PUBLISHED_BY]-(b) DELETE r", {idNeo: id, idNeoGame: gameId})
+    .run("MATCH (publisher:Publisher{mongoPublisherId: {idPublisher}}) MATCH (publisher)-[r]-() DELETE r", {idPublisher: id})
+    .then(function(result) {
+      res.status(200).json({"status": "publisher relationship deleted"});
     })
     .catch((error) => {
       res.status(400).json(error);

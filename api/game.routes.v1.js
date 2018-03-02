@@ -44,8 +44,7 @@ routes.get('/games/:id', function(req, res) {
             path: 'publishers'
         })
         .then((games) => {
-            res.status(200).send(games
-            );
+            res.status(200).send(games);
         })
         .catch((error) => res.status(400).json(error));
 });

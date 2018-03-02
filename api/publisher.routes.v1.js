@@ -40,19 +40,17 @@ routes.get('/publishers/publishedby/:id', function(req, res) {
   const id = req.param('id');
 
   session
-    .run("MATCH (n:Publisher{mongoPublisherId: {idNeo}}) MATCH  (n)-[:PUBLISHED_BY*2]-(m) WHERE NOT (n)-[:PUBLISHED_BY]-(m) AND n <> m RETURN m", {idNeo: id})
+
+    .run("MATCH (publisher:Publisher {mongoPublisherId: {idNeo}})-[:PUBLISHED_BY]->(game:Game) RETURN game", {idNeo: id})
     .then(function(result) {
       result.records.forEach(function(record){
-        ids.push(record._fields[0].properties.mongoPublisherId);
+        ids.push(record._fields[0].properties.mongoGameId);
       });
       console.log(ids);
       return ids;
     })
     .then((ids)=>{
-      Publisher.find({_id: { $in: ids}})
-          .then((blogPost) => {
-          res.status(200).json(blogPost);
-        })
+          res.status(200).json(ids);
     })
     .catch((error) => {
       res.status(400).json(error);

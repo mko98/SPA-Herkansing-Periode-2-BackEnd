@@ -21,20 +21,4 @@ const PublisherSchema = new Schema({
 
 const Publisher = mongoose.model('publishers', PublisherSchema);
 
-Publisher.count({}, function (err, count) {
-    if(count < 1){
-        console.log('Adding publisher');
-        const publisher = new Publisher({
-            publisherName: "Electronic Arts",
-            founder: "Trip Hawkins",
-            ceo: "Andrew Wilson",
-            _id: "5a3fd41e3ef7ccda81e7dda4"
-        });
-        publisher.save();
-    }
-    else {
-        console.log('There already is a publisher in the database')
-    }
-});
-
 module.exports= Publisher;

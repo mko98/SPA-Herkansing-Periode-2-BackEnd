@@ -50,12 +50,30 @@ routes.get('/publishers/publishedby/:id', function(req, res) {
       return ids;
     })
     .then((ids)=>{
-          res.status(200).json(ids);
+      Game.find({_id: { $in: ids}})
+          .then((blogPost) => {
+          res.status(200).json(blogPost);
+        })
     })
     .catch((error) => {
       res.status(400).json(error);
     })
 });
+
+//     .then(function(result) {
+//       result.records.forEach(function(record){
+//         ids.push(record._fields[0].properties.mongoGameId);
+//       });
+//       console.log(ids);
+//       return ids;
+//     })
+//     .then((ids)=>{
+//           res.status(200).json(ids);
+//     })
+//     .catch((error) => {
+//       res.status(400).json(error);
+//     })
+// });
 
 routes.post('/publishers/makeconnection/:id/:gameid', function (req, res) {
     res.contentType('application/json');

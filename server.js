@@ -6,6 +6,7 @@ const logger = require('morgan');
 const mongodb = require('./config/mongo.db');
 const gameroutes_v1 = require('./api/game.routes.v1');
 const publisherroutes_v1 = require('./api/publisher.routes.v1');
+const userroutes_v1 = require('./api/user.routes.v1');
 const env = require('./config/env/env');
 
 const app = express();
@@ -36,6 +37,7 @@ app.use(function (req, res, next) {
 
 app.use('/api/v1', gameroutes_v1);
 app.use('/api/v1', publisherroutes_v1);
+app.use('/api/v1', userroutes_v1);
 
 app.use(function (err, req, res, next) {
     // console.dir(err);

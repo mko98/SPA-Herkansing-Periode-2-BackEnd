@@ -6,7 +6,7 @@ const neo4j = require('neo4j-driver').v1;
 var Publisher = require('../model/publisher.model');
 var Game = require('../model/game.model');
 
-const driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "neo4j"));
+const driver = neo4j.driver("bolt://localhost", neo4j.auth.basic("neo4j", "test123"));
 const session = driver.session();
 
 routes.get('/publishers/published/:id', function(req, res) {

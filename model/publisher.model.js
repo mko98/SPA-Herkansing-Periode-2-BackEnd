@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const GameSchema = require('./game.model').GameSchema;
+const UserSchema = require('./user.model').UserSchema;
 
 const PublisherSchema = new Schema({
     publisherName:{
@@ -14,7 +14,11 @@ const PublisherSchema = new Schema({
     ceo: {
       type: String,
       required: true
-    }
+    },
+    user: [{
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    }],
 },
     { usePushEach: true }
 );

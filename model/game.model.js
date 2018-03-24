@@ -22,6 +22,10 @@ const GameSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'publishers'
     }],
+    user: [{
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    }],
 
 },
     { usePushEach: true }

@@ -9,6 +9,14 @@ const UserSchema = new Schema({
     password: {
       type: String,
       required: true
+    },
+    emailVerifyToken: {
+      type: String,
+      required: true
+    },
+    isVerified: {
+      type: Boolean,
+      default: false
     }
   },
     { usePushEach: true }

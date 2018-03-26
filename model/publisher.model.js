@@ -15,6 +15,12 @@ const PublisherSchema = new Schema({
       type: String,
       required: true
     },
+    yearFounded: {
+      type: Date
+    },
+    publisherWebsite: {
+      type: String
+    },
     user: [{
         type: Schema.Types.ObjectId,
         ref: 'user'

@@ -18,6 +18,15 @@ const GameSchema = new Schema({
     imagePath: {
       type: String
     },
+    platforms: [{
+      type: String
+    }],
+    webiste: {
+      type: String
+    },
+    releaseDate: {
+      type: Date
+    },
     publishers: [{
         type: Schema.Types.ObjectId,
         ref: 'publishers'

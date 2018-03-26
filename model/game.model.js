@@ -21,7 +21,7 @@ const GameSchema = new Schema({
     platforms: [{
       type: String
     }],
-    webiste: {
+    website: {
       type: String
     },
     releaseDate: {

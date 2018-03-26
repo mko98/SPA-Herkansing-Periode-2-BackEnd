@@ -5,15 +5,15 @@ const UserSchema = require('./user.model').UserSchema;
 const PublisherSchema = new Schema({
     publisherName:{
         type: String,
-        required: true
+        required: [true, 'PublisherName is required.']
     },
     founder: {
       type: String,
-      required: true
+      required: [true, 'Founder is required.']
     },
     ceo: {
       type: String,
-      required: true
+      required: [true, 'CEO is required.']
     },
     yearFounded: {
       type: Date

@@ -64,8 +64,6 @@ routes.put('/games/:id/:gameid', function(req, res){
     const publisherId = req.param('id');
     const gameId = req.param('gameid');
 
-
-
     Game.findById(gameId)
         .then((game) => {
         game.publishers.push(publisherId);
@@ -97,5 +95,37 @@ routes.delete('/games/:id', function(req, res) {
         .catch((error) => res.status(400).json(error))
 });
 
+routes.get('/games/genre/:genre', function(req, res) {
+const URLGenre = req.params.genre;
+Game.find({genre: {$regex: ".*" + URLGenre + ".*"}})
+.then((games) => {
+  res.status(200).json(games);
+})
+.catch((error) => {
+  res.status(400).json(error);
+})
+});
+
+routes.get('/games/engine/:engine', function(req, res) {
+const URLEngine = req.params.engine;
+Game.find({engine: {$regex: ".*" + URLEngine + ".*"}})
+.then((games) => {
+  res.status(200).json(games);
+})
+.catch((error) => {
+  res.status(400).json(error);
+})
+});
+
+routes.get('/games/platform/:platform', function(req, res) {
+const URLPlatform = req.params.platform;
+Game.find({platforms: {$regex: ".*" + URLPlatform + ".*"}})
+.then((games) => {
+  res.status(200).json(games);
+})
+.catch((error) => {
+  res.status(400).json(error);
+})
+});
 
 module.exports = routes;

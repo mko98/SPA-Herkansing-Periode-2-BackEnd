@@ -4,15 +4,15 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     email: {
         type: String,
-        required: true
+        required: [true, 'Email is required.']
     },
     password: {
       type: String,
-      required: true
+      required: [true, 'Password is required.']
     },
     emailVerifyToken: {
       type: String,
-      required: true
+      required: [true, 'EmailVerifyToken is required.']
     },
     isVerified: {
       type: Boolean,
